@@ -1,7 +1,7 @@
 package data_err
 
 import (
-	"conteam/data_struct"
+	"github.com/abc950309/conteam-golang/data_struct"
 )
 
 func GetErrObj(num int) *data_struct.JsonOutput {

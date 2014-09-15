@@ -4,7 +4,7 @@ import(
 	"fmt"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
-	"conteam/data_struct"
+	"github.com/abc950309/conteam-golang/data_struct"
 )
 
 func link_mongo_init() *mgo.Session {

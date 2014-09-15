@@ -4,7 +4,7 @@ import(
 	"fmt"
 	"net/http"
 	"gopkg.in/mgo.v2"
-//	"conteam/data_struct"
+//	"github.com/abc950309/conteam-golang/data_struct"
 )
 
 var Session *mgo.Session

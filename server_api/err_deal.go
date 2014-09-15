@@ -3,7 +3,7 @@ package main
 import(
 	"fmt"
 	"net/http"
-	"conteam/data_err"
+	"github.com/abc950309/conteam-golang/data_err"
 	"encoding/json"
 )
 
