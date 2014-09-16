@@ -2,11 +2,11 @@ package data_struct
 
 type ExchangeOutput struct {
 	Code int `json:"code,omitempty"`
-    ErrorDesc interface{} `json:"error_description,omitempty"` //JsonErrDesc
-	CliInit interface{} `json:"cli_init,omitempty"` //JsonCliInit
-	Contact interface{} `json:"contact,omitempty"` //JsonContact
-	Message interface{} `json:"message,omitempty"` //JsonMessage
-	Response interface{} `json:"response,omitempty"` //JsonResponse
+    ErrorDesc ExchangeErrDesc `json:"error_description,omitempty"` //JsonErrDesc
+	CliInit ExchangeCliInit `json:"cli_init,omitempty"` //JsonCliInit
+	Contact ExchangeContact `json:"contact,omitempty"` //JsonContact
+	Message ExchangeMessage `json:"message,omitempty"` //JsonMessage
+	Response ExchangeResponse `json:"response,omitempty"` //JsonResponse
 }
 
 type ExchangeErrDesc struct {
@@ -21,8 +21,8 @@ type ExchangeCliInit struct {
 
 type ExchangeContact struct {
 	Act string `json:"act"`
-	Read interface{} `json:"read,omitempty"` //JsonContactRead
-	Write interface{} `json:"write,omitempty"` //JsonContactWrite
+	Read ExchangeContactRead `json:"read,omitempty"` //JsonContactRead
+	Write ExchangeContactWrite `json:"write,omitempty"` //JsonContactWrite
 }
 
 type ExchangeContactRead struct {
@@ -37,8 +37,8 @@ type ExchangeContactWrite struct {
 
 type ExchangeMessage struct {
 	Act string `json:"act"`
-	Get interface{} `json:"get,omitempty"` //JsonMessageGet
-	Send interface{} `json:"send,omitempty"` //JsonMessageSend
+	Get ExchangeMessageGet `json:"get,omitempty"` //JsonMessageGet
+	Send ExchangeMessageSend `json:"send,omitempty"` //JsonMessageSend
 }
 
 type ExchangeMessageGet JsonContactRead
@@ -47,7 +47,7 @@ type ExchangeMessageSend Message
 
 type ExchangeResponse struct {
 	Method string `json:"method"`
-	CliInitBack interface{} `json:"cli_init_back,omitempty"` //JsonCliInitBack
+	CliInitBack ExchangeCliInitBack `json:"cli_init_back,omitempty"` //JsonCliInitBack
 	ContactList []ContactData `json:"contact_list,omitempty"`
 	MessageList []Message `json:"message_list,omitempty"`
 }
