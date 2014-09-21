@@ -28,11 +28,8 @@ func VerifyReqLogic(req_type int, req_method int) bool {
 	}
 	
 	verify_list := [2][5]bool{
-	{	true,	true	},
-	{	true,	false	},
-	{	true,	false	},
-	{	true,	true	},
-	{	true,	true	},
+	{	true,	true,	true,	true,	true	},
+	{	true,	false,	false,	true,	true	},
 	}
 	
 	return verify_list[req_type][req_method]
