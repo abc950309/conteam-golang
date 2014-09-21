@@ -63,13 +63,14 @@ func deal_request(raw_type string, raw_method string, raw_data string) (int, int
 	case core.ConstTypeContact:
 		var request_data data_struct.Contact
 		json.Unmarshal([]byte(raw_data), &request_data)
+		return 0, request_type, request_method, request_data
 	case core.ConstTypeMessage:
 		var request_data data_struct.Message
 		json.Unmarshal([]byte(raw_data), &request_data)
+		return 0, request_type, request_method, request_data
 	default:
 		return -1, -1, -1, -1
-		var request_data interface{}
 	}
 	
-	return 0, request_type, request_method, request_data
+	return -1, -1, -1, -1
 }
