@@ -45,7 +45,14 @@ func link_mongo_init() *mgo.Session {
 	return session
 }
 
-func Controller() {
+func Controller(dealed_type int, dealed_method int, dealed_data interface{}) string {
+	output := ''
+	
+	switch dealed_type {
+	case ConstTypeContact:
+	case ConstTypeMessage:
+	default:
+	}
+	
+	return output
 }
-
-

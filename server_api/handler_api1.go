@@ -21,11 +21,11 @@ func handler_api1(r *http.Request, output *string) {
 		request_method := r.Form["method"][0]
 		request_data := r.Form["data"][0]
 		code, dealed_type, dealed_method, dealed_data := deal_request(request_type, request_method, request_data)
-		
-		data_obj, _ := json.Marshal(dealed_data)
-		data_output := string(data_obj)
-		
-		print(code, dealed_type, ';', dealed_method, ';', data_output)
+		if code < 0 {
+			err_api1(r, output)
+		} else {
+			*output = core.Controller(dealed_type, dealed_method, dealed_data)
+		}
 	} else {
 		err_api1(r, output)
 	}
