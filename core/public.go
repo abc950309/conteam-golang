@@ -46,7 +46,7 @@ func link_mongo_init() *mgo.Session {
 }
 
 func Controller(dealed_type int, dealed_method int, dealed_data interface{}) string {
-	output := ''
+	output := ""
 	
 	switch dealed_type {
 	case ConstTypeContact:
