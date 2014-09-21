@@ -32,7 +32,7 @@ func VerifyReqLogic(req_type int, req_method int) bool {
 	{	true,	false	},
 	{	true,	false	},
 	{	true,	true	},
-	{	true,	true	}
+	{	true,	true	},
 	}
 	
 	return verify_list[req_type][req_method]

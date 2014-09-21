@@ -1,13 +1,19 @@
 package data_err
 
-import (
-	"github.com/abc950309/conteam-golang/data_struct"
-)
+type JsonOutput struct {
+	Code int `json:"code,omitempty"`
+    ErrorDesc interface{} `json:"error_description,omitempty"` //JsonErrDesc
+}
 
-func GetErrObj(num int) *data_struct.JsonOutput {
-	output := data_struct.JsonOutput{
+type JsonErrDesc struct {
+	Description string `json:"description"`
+	Url string `json:"url"`
+}
+
+func GetErrObj(num int) *JsonOutput {
+	output := JsonOutput{
 		Code: num,
-		ErrorDesc: data_struct.JsonErrDesc{
+		ErrorDesc: JsonErrDesc{
 			Description: ErrListDesc[num],
 			Url: ErrListUrl[num],
 		},
