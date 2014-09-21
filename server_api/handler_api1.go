@@ -20,14 +20,14 @@ func handler_api1(r *http.Request, output *string) {
 		request_type := r.Form["type"][0]
 		request_method := r.Form["method"][0]
 		request_data := r.Form["data"][0]
-		code, request_type, request_method, request_data := deal_request(&request_type, &request_method, &request_data)
+		code, request_type, request_method, request_data := deal_request(request_type, request_method, request_data)
 		print(code, request_type, request_method, request_data)
 	} else {
 		err_api1(r, output)
 	}
 }
 
-func deal_request(raw_type *string, raw_method *string, raw_data *string) (int, int, int, interface{}) {
+func deal_request(raw_type string, raw_method string, raw_data string) (int, int, int, interface{}) {
 	var request_type int
 	var request_method int
 	
