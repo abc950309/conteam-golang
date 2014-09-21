@@ -1,7 +1,7 @@
 package main
 
 import(
-//	"fmt"
+	"fmt"
 //	"gopkg.in/mgo.v2"
 //	"gopkg.in/mgo.v2/bson"
 	"net/http"
@@ -26,6 +26,7 @@ func handler_api1(r *http.Request, output *string) {
 		} else {
 			*output = core.Controller(dealed_type, dealed_method, dealed_data)
 		}
+		fmt.Println(*output)
 	} else {
 		err_api1(r, output)
 	}
