@@ -68,6 +68,7 @@ func deal_request(raw_type string, raw_method string, raw_data string) (int, int
 		json.Unmarshal([]byte(raw_data), &request_data)
 	default:
 		return -1, -1, -1, -1
+		var request_data interface{}
 	}
 	
 	return 0, request_type, request_method, request_data
