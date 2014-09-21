@@ -54,5 +54,6 @@ func Controller(dealed_type int, dealed_method int, dealed_data interface{}) str
 	default:
 	}
 	
+	output += "Get it!!!"
 	return output
 }
