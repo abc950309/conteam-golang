@@ -17,9 +17,9 @@ func handler_api1(r *http.Request, output *string) {
 	if r.Method == "GET" {
 		err_input_get(r, output)
 	} else if r.Form["type"] != nil && r.Form["method"] != nil {
-		request_type = r.Form["type"][0]
-		request_method = r.Form["method"][0]
-		request_data = r.Form["data"][0]
+		request_type := r.Form["type"][0]
+		request_method := r.Form["method"][0]
+		request_data := r.Form["data"][0]
 		code, request_type, request_method, request_data := deal_request(&request_type, &request_method, &request_data)
 		print(code, request_type, request_method, request_data)
 	} else {
