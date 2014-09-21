@@ -20,8 +20,8 @@ func handler_api1(r *http.Request, output *string) {
 		request_type := r.Form["type"][0]
 		request_method := r.Form["method"][0]
 		request_data := r.Form["data"][0]
-		code, request_type, request_method, request_data := deal_request(request_type, request_method, request_data)
-		print(code, request_type, request_method, request_data)
+		code, dealed_type, dealed_method, dealed_data := deal_request(request_type, request_method, request_data)
+		print(code, dealed_type, dealed_method, dealed_data)
 	} else {
 		err_api1(r, output)
 	}
