@@ -1,10 +1,10 @@
 package core
 
 import(
-	"fmt"
+//	"fmt"
 	"gopkg.in/mgo.v2"
-	"gopkg.in/mgo.v2/bson"
-	"github.com/abc950309/conteam-golang/data_struct"
+//	"gopkg.in/mgo.v2/bson"
+//	"github.com/abc950309/conteam-golang/data_struct"
 )
 
 const(
@@ -27,7 +27,7 @@ func VerifyReqLogic(req_type int, req_method int) bool {
 		return false
 	}
 	
-	verify_list = [2][5]bool{
+	verify_list := [2][5]bool{
 	{	true,	true	},
 	{	true,	false	},
 	{	true,	false	},
