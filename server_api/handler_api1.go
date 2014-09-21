@@ -5,6 +5,9 @@ import(
 //	"gopkg.in/mgo.v2"
 //	"gopkg.in/mgo.v2/bson"
 	"net/http"
+	"github.com/abc950309/conteam-golang/core"
+	"github.com/abc950309/conteam-golang/data_struct"
+	"encoding/json"
 )
 
 func handler_api1(r *http.Request, output *string) {
@@ -13,81 +16,59 @@ func handler_api1(r *http.Request, output *string) {
 	
 	if r.Method == "GET" {
 		err_input_get(r, output)
-	} else if r.Form["method"] != nil && r.Form["data"] != nil {
-		switch r.Form["method"][0] {
-		case "cli_init":
-			deal_cli_init(r, output)
-		case "contact":
-			deal_contact(r, output)
-		case "message":
-			deal_message(r, output)
-		default:
-			err_api1(r, output)
-		}
+	} else if r.Form["type"] != nil && r.Form["method"] != nil {
+		request_type = r.Form["type"][0]
+		request_method = r.Form["method"][0]
+		request_data = r.Form["data"][0]
+		code, request_type, request_method, request_data := deal_request(&request_type, &request_method, &request_data)
+		print(code, request_type, request_method, request_data)
 	} else {
 		err_api1(r, output)
 	}
-	// process input data end
-	
-	/*
-	c := session.DB("golang").C("test_a")
-	back := `
-		<html>
-		<head>
-		<title></title>
-		</head>
-	`
-	fmt.Fprintln(w, back)
-	
-	fmt.Fprintln(w, r.Form)
+}
 
-	if r.Form["name"] != nil {
-		if len(r.Form["name"][0]) > 0 {
-			in := Sign{Name: r.Form["name"][0], Value: r.Form["value"][0]}
-			c.Insert(in)
-		}
-		fmt.Fprintln(w, len(r.Form["name"][0]))
+func deal_request(raw_type *string, raw_method *string, raw_data *string) (int, int, int, interface{}) {
+	var request_type int
+	var request_method int
+	
+	switch raw_type{
+	case "contact":
+		request_type = core.ConstTypeContact
+	case "message":
+		request_type = core.ConstTypeMessage
+	default:
+		request_type = core.ConstTypeErr
 	}
 	
-	back = `
-		<body>
-		<form action="" method="post">
-			name:<input type="text" name="name">
-			value:<input type="text" name="value">
-			<input type="submit" value="登记">
-		</form>
-		</body>
-		</html>
-	`
-	fmt.Fprintln(w, back)
-
-	var results []Sign
-
-	c.Find(bson.M{}).Sort("_id").All(&results)
-
-	for _, v := range results {
-		back = back + "<p>" + v.Name + "</p>"
-		back = back + "<p>" + v.Value + "</p>"
+	switch raw_method {
+	case "insert":
+		request_method = core.ConstMethodInsert
+	case "delete":
+		request_method = core.ConstMethodDelete
+	case "update":
+		request_method = core.ConstMethodUpdate
+	case "get":
+		request_method = core.ConstMethodGet
+	case "list":
+		request_method = core.ConstMethodList
+	default:
+		request_method = core.ConstMethodErr
 	}
-
-	fmt.Fprintf(w, back)
-	*/
-}
-
-func deal_cli_init(r *http.Request, output *string) {
-	*output += r.Form["data"][0]
-	*output += "\n"
-	*output += "deal_cli_init"
-}
-
-func deal_contact(r *http.Request, output *string) {
-	*output += r.Form["data"][0]
-	*output += "\n"
-	*output += "deal_contact"
-}
-
-func deal_message(r *http.Request, output *string) {
-	*output += r.Form["data"][0]
-	*output += "\n"
-	*output += "deal_message"
+	
+	if core.VerifyReqLogic(request_type, request_method) == false {
+		return -1, -1, -1, -1
+	}
+	
+	switch request_type {
+	case core.ConstTypeContact:
+		var request_data data_struct.Contact
+		json.Unmarshal([]byte(raw_data), &request_data)
+	case core.ConstTypeMessage:
+		var request_data data_struct.Message
+		json.Unmarshal([]byte(raw_data), &request_data)
+	default:
+		return -1, -1, -1, -1
+	}
+	
+	return 0, request_type, request_method, request_data
 }
