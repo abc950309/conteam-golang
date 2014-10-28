@@ -1,11 +1,12 @@
 package core
 
 import (
-	//	"fmt"
+//	"fmt"
 	"gopkg.in/mgo.v2"
-	//	"gopkg.in/mgo.v2/bson"
+	"gopkg.in/mgo.v2/bson"
 	"github.com/abc950309/conteam-golang/data_struct"
 	"github.com/nu7hatch/gouuid"
+	"time"
 )
 
 const (
@@ -60,31 +61,31 @@ func Controller(user_token string, dealed_type int, dealed_method int, dealed_da
 	case ConstTypeContact:
 		switch dealed_method {
 		case ConstMethodInsert:
-			value, ok = dealed_data.(data_struct.Contact)
+			value, ok := dealed_data.(data_struct.Contact)
 			if ok {
 				return contact_insert(value)
 			}
 
 		case ConstMethodDelete:
-			value, ok = dealed_data.(data_struct.ContactFilter)
+			value, ok := dealed_data.(data_struct.ContactFilter)
 			if ok {
 				return contact_delete(value)
 			}
 
 		case ConstMethodUpdate:
-			value, ok = dealed_data.(data_struct.Contact)
+			value, ok := dealed_data.(data_struct.Contact)
 			if ok {
 				return contact_update(value)
 			}
 
 		case ConstMethodGet:
-			value, ok = dealed_data.(data_struct.ContactFilter)
+			value, ok := dealed_data.(data_struct.ContactFilter)
 			if ok {
 				return contact_get(value)
 			}
 
 		case ConstMethodList:
-			value, ok = dealed_data.(data_struct.ContactFilters)
+			value, ok := dealed_data.(data_struct.ContactFilters)
 			if ok {
 				return contact_list(value)
 			}
@@ -93,19 +94,19 @@ func Controller(user_token string, dealed_type int, dealed_method int, dealed_da
 	case ConstTypeMessage:
 		switch dealed_method {
 		case ConstMethodInsert:
-			value, ok = dealed_data.(data_struct.Message)
+			value, ok := dealed_data.(data_struct.Message)
 			if ok {
 				return message_insert(value)
 			}
 
 		case ConstMethodGet:
-			value, ok = dealed_data.(data_struct.MessageFilter)
+			value, ok := dealed_data.(data_struct.MessageFilter)
 			if ok {
 				return message_get(value)
 			}
 
 		case ConstMethodList:
-			value, ok = dealed_data.(data_struct.MessageFilters)
+			value, ok := dealed_data.(data_struct.MessageFilters)
 			if ok {
 				return message_list(value)
 			}
@@ -120,26 +121,26 @@ func Controller(user_token string, dealed_type int, dealed_method int, dealed_da
 // type methods func(value) interface{}
 // contact methods
 func contact_insert(value data_struct.Contact) data_struct.Contact {
-
+	return data_struct.Contact{}
 }
 func contact_delete(value data_struct.ContactFilter) data_struct.Contact {
-
+	return data_struct.Contact{}
 }
 func contact_update(value data_struct.Contact) data_struct.Contact {
-
+	return data_struct.Contact{}
 }
 func contact_get(value data_struct.ContactFilter) data_struct.Contact {
-
+	return data_struct.Contact{}
 }
 func contact_list(value data_struct.ContactFilters) data_struct.ContactList {
-
+	return data_struct.ContactList{}
 }
 
 // message methods
 func message_insert(value data_struct.Message) data_struct.Message {
 	u, err := uuid.NewV4()
 	if err != nil {
-		return nil
+		return data_struct.Message{}
 	}
 	value.MessageID = u.String()
 	
@@ -155,13 +156,15 @@ func message_insert(value data_struct.Message) data_struct.Message {
     err = c.Insert(value)
     if err != nil {
         panic(err)
-    }	
+    }
+	
+	return value
 }
 func message_get(value data_struct.MessageFilter) data_struct.Message {
-
+	return data_struct.Message{}
 }
 func message_list(value data_struct.MessageFilters) data_struct.MessageList {
-
+	return data_struct.MessageList{}
 }
 
 func token_deal(user_token string, source string) (int, string) {
@@ -172,15 +175,16 @@ func token_deal(user_token string, source string) (int, string) {
 	defer session.Close()
 
 	session.SetMode(mgo.Monotonic, true)
-
+	
+	c := session.DB("message").C("data")
 	result := data_struct.Token{}
 	err = c.Find(bson.M{"token": user_token}).One(&result)
 	if err != nil {
-		return -1, nil
+		return -1, data_struct.Token{}
 	}
 
 	if (time.Now().Unix() > result.Expire) || (source == result.Source) {
-		return -1, nil
+		return -1, data_struct.Token{}
 	}
 
 	return -1, result.UserID
