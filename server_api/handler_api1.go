@@ -26,7 +26,7 @@ func handler_api1(r *http.Request, output *string) {
 		if code < 0 {
 			err_api1(r, output)
 		} else {
-			out_json, err = json.Marshal(core.Controller(request_token, dealed_type, dealed_method, dealed_data, "api1"))
+			out_json, err := json.Marshal(core.Controller(request_token, dealed_type, dealed_method, dealed_data, "api1"))
 			
 			if err == nil {
 				*output = string(out_json)
@@ -88,7 +88,7 @@ func deal_request(raw_type string, raw_method string, raw_data string) (int, int
 			var request_data data_struct.ContactFilters
 		}
 	case core.ConstTypeMessage:
-		switch dealed_method {
+		switch request_method {
 		case core.ConstMethodInsert:
 			var request_data data_struct.Message
 		case core.ConstMethodGet:
@@ -97,6 +97,8 @@ func deal_request(raw_type string, raw_method string, raw_data string) (int, int
 			var request_data data_struct.MessageFilters
 		}
 	default:
+		return -1, -1, -1, -1
+		var request_data interface{}
 	}
 	
 	if json.Unmarshal([]byte(raw_data), &request_data) == nil {
