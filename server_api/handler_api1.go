@@ -6,7 +6,7 @@ import (
 	//	"gopkg.in/mgo.v2/bson"
 	"encoding/json"
 	"github.com/abc950309/conteam-golang/core"
-	"github.com/abc950309/conteam-golang/data_struct"
+//	"github.com/abc950309/conteam-golang/data_struct"
 	"net/http"
 )
 
