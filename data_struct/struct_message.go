@@ -23,7 +23,7 @@ type MessageListItem struct {
 }
 
 type MessageFilter struct {
-
+	MessageID string `json:"message_id"`
 }
 
 type MessageFilters struct {

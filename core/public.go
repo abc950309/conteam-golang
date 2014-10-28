@@ -100,7 +100,6 @@ func Controller(user_token string, dealed_type int, dealed_method int, dealed_da
 			if ok {
 				return message_insert(value)
 			}
-			fmt.Println("ConstMethodInsert: " , value)
 		case ConstMethodGet:
 			value, ok := dealed_data.(data_struct.MessageFilter)
 			if ok {
@@ -140,31 +139,54 @@ func contact_list(value data_struct.ContactFilters) data_struct.ContactList {
 
 // message methods
 func message_insert(value data_struct.Message) data_struct.Message {
+	if value.To == nil || value.From == nil || value.Content == nil {
+		return data_struct.Message{}
+	}
+	
 	u, err := uuid.NewV4()
 	if err != nil {
 		return data_struct.Message{}
 	}
 	value.MessageID = u.String()
+	value.TimeStamp = time.Now().Unix()
 	
 	session, err := mgo.Dial("127.0.0.1")
 	if err != nil {
 		panic(err)
 	}
 	defer session.Close()
-
+	
 	session.SetMode(mgo.Monotonic, true)
-
+	
     c := session.DB("message").C("data")
     err = c.Insert(value)
     if err != nil {
         panic(err)
     }
-	fmt.Println("message_insert: " , value)
 	
 	return value
 }
 func message_get(value data_struct.MessageFilter) data_struct.Message {
-	return data_struct.Message{}
+	if value.MessageID == nil {
+		return data_struct.Message{}
+	}
+		
+	session, err := mgo.Dial("127.0.0.1")
+	if err != nil {
+		panic(err)
+	}
+	defer session.Close()
+	
+	session.SetMode(mgo.Monotonic, true)
+	
+    c := session.DB("message").C("data")
+	result := data_struct.Message{}
+	err = c.Find(bson.M{"message_id": value.MessageID}).One(&result)
+	if err != nil {
+		return data_struct.Message{}
+	}
+	
+	return result
 }
 func message_list(value data_struct.MessageFilters) data_struct.MessageList {
 	return data_struct.MessageList{}
@@ -179,7 +201,7 @@ func token_deal(user_token string, source string) (int, string) {
 
 	session.SetMode(mgo.Monotonic, true)
 	
-	c := session.DB("message").C("data")
+	c := session.DB("token").C("valid")
 	result := data_struct.Token{}
 	err = c.Find(bson.M{"token": user_token}).One(&result)
 	if err != nil {
