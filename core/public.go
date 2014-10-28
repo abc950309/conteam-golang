@@ -205,6 +205,9 @@ func token_deal(user_token string, source string) (int, string) {
 	c := session.DB("token").C("valid")
 	result := data_struct.Token{}
 	err = c.Find(bson.M{"token": user_token}).One(&result)
+	
+	fmt.Println("token_deal: " , user_token , " " , result)
+	
 	if err != nil {
 		return -1, ""
 	}
