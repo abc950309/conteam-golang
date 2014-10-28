@@ -102,6 +102,7 @@ func Controller(user_token string, dealed_type int, dealed_method int, dealed_da
 			}
 		case ConstMethodGet:
 			value, ok := dealed_data.(data_struct.MessageFilter)
+			fmt.Println("ConstMethodGet: " , value)
 			if ok {
 				return message_get(value)
 			}
@@ -142,6 +143,8 @@ func message_insert(value data_struct.Message) data_struct.Message {
 	if value.Content == "" {
 		return data_struct.Message{}
 	}
+	
+	fmt.Println("message_insert: " , value)
 	
 	u, err := uuid.NewV4()
 	if err != nil {
