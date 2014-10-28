@@ -49,13 +49,11 @@ func link_mongo_init() *mgo.Session {
 
 func Controller(user_token string, dealed_type int, dealed_method int, dealed_data interface{}, source string) interface{} {
 	
-	/**
 	code, user_id = token_deal(user_token)
 
 	if code < 0 {
 		return nil
 	}
-	**/
 	
 	fmt.Println("Controller: " , dealed_data)
 	
@@ -65,31 +63,31 @@ func Controller(user_token string, dealed_type int, dealed_method int, dealed_da
 		case ConstMethodInsert:
 			value, ok := dealed_data.(data_struct.Contact)
 			if ok {
-				return contact_insert(value)
+				return contact_insert(value, user_id)
 			}
 
 		case ConstMethodDelete:
 			value, ok := dealed_data.(data_struct.ContactFilter)
 			if ok {
-				return contact_delete(value)
+				return contact_delete(value, user_id)
 			}
 
 		case ConstMethodUpdate:
 			value, ok := dealed_data.(data_struct.Contact)
 			if ok {
-				return contact_update(value)
+				return contact_update(value, user_id)
 			}
 
 		case ConstMethodGet:
 			value, ok := dealed_data.(data_struct.ContactFilter)
 			if ok {
-				return contact_get(value)
+				return contact_get(value, user_id)
 			}
 
 		case ConstMethodList:
 			value, ok := dealed_data.(data_struct.ContactFilters)
 			if ok {
-				return contact_list(value)
+				return contact_list(value, user_id)
 			}
 
 		}
@@ -98,18 +96,18 @@ func Controller(user_token string, dealed_type int, dealed_method int, dealed_da
 		case ConstMethodInsert:
 			value, ok := dealed_data.(data_struct.Message)
 			if ok {
-				return message_insert(value)
+				return message_insert(value, user_id)
 			}
 		case ConstMethodGet:
 			value, ok := dealed_data.(data_struct.MessageFilter)
 			if ok {
-				return message_get(value)
+				return message_get(value, user_id)
 			}
 
 		case ConstMethodList:
 			value, ok := dealed_data.(data_struct.MessageFilters)
 			if ok {
-				return message_list(value)
+				return message_list(value, user_id)
 			}
 
 		}
@@ -121,24 +119,24 @@ func Controller(user_token string, dealed_type int, dealed_method int, dealed_da
 
 // type methods func(value) interface{}
 // contact methods
-func contact_insert(value data_struct.Contact) data_struct.Contact {
+func contact_insert(value data_struct.Contact, user_id string) data_struct.Contact {
 	return data_struct.Contact{}
 }
-func contact_delete(value data_struct.ContactFilter) data_struct.Contact {
+func contact_delete(value data_struct.ContactFilter, user_id string) data_struct.Contact {
 	return data_struct.Contact{}
 }
-func contact_update(value data_struct.Contact) data_struct.Contact {
+func contact_update(value data_struct.Contact, user_id string) data_struct.Contact {
 	return data_struct.Contact{}
 }
-func contact_get(value data_struct.ContactFilter) data_struct.Contact {
+func contact_get(value data_struct.ContactFilter, user_id string) data_struct.Contact {
 	return data_struct.Contact{}
 }
-func contact_list(value data_struct.ContactFilters) data_struct.ContactList {
+func contact_list(value data_struct.ContactFilters, user_id string) data_struct.ContactList {
 	return data_struct.ContactList{}
 }
 
 // message methods
-func message_insert(value data_struct.Message) data_struct.Message {
+func message_insert(value data_struct.Message, user_id string) data_struct.Message {
 	if value.Content == "" {
 		return data_struct.Message{}
 	}
@@ -149,6 +147,8 @@ func message_insert(value data_struct.Message) data_struct.Message {
 	}
 	value.MessageID = u.String()
 	value.TimeStamp = time.Now().Unix()
+	
+	value.From.UserID = user_id
 	
 	session, err := mgo.Dial("127.0.0.1")
 	if err != nil {
@@ -166,7 +166,7 @@ func message_insert(value data_struct.Message) data_struct.Message {
 	
 	return value
 }
-func message_get(value data_struct.MessageFilter) data_struct.Message {
+func message_get(value data_struct.MessageFilter, user_id string) data_struct.Message {
 	if value.MessageID == "" {
 		return data_struct.Message{}
 	}
@@ -189,7 +189,7 @@ func message_get(value data_struct.MessageFilter) data_struct.Message {
 	
 	return result
 }
-func message_list(value data_struct.MessageFilters) data_struct.MessageList {
+func message_list(value data_struct.MessageFilters, user_id string) data_struct.MessageList {
 	return data_struct.MessageList{}
 }
 
