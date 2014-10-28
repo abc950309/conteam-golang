@@ -144,8 +144,6 @@ func message_insert(value data_struct.Message) data_struct.Message {
 		return data_struct.Message{}
 	}
 	
-	fmt.Println("message_insert: " , value)
-	
 	u, err := uuid.NewV4()
 	if err != nil {
 		return data_struct.Message{}
@@ -173,6 +171,8 @@ func message_get(value data_struct.MessageFilter) data_struct.Message {
 	if value.MessageID == "" {
 		return data_struct.Message{}
 	}
+	
+	fmt.Println("message_get: " , value)
 		
 	session, err := mgo.Dial("127.0.0.1")
 	if err != nil {
