@@ -5,6 +5,7 @@ import (
 	"gopkg.in/mgo.v2"
 	//	"gopkg.in/mgo.v2/bson"
 	"github.com/abc950309/conteam-golang/data_struct"
+	"github.com/nu7hatch/gouuid"
 )
 
 const (
@@ -46,11 +47,14 @@ func link_mongo_init() *mgo.Session {
 }
 
 func Controller(user_token string, dealed_type int, dealed_method int, dealed_data interface{}, source string) interface{} {
+	
+	/**
 	code, user_id = token_deal(user_token)
 
 	if code < 0 {
 		return nil
 	}
+	**/
 
 	switch dealed_type {
 	case ConstTypeContact:
@@ -133,8 +137,25 @@ func contact_list(value data_struct.ContactFilters) data_struct.ContactList {
 
 // message methods
 func message_insert(value data_struct.Message) data_struct.Message {
+	u, err := uuid.NewV4()
+	if err != nil {
+		return nil
+	}
+	value.MessageID = u.String()
 	
-	
+	session, err := mgo.Dial("127.0.0.1")
+	if err != nil {
+		panic(err)
+	}
+	defer session.Close()
+
+	session.SetMode(mgo.Monotonic, true)
+
+    c := session.DB("message").C("data")
+    err = c.Insert(value)
+    if err != nil {
+        panic(err)
+    }	
 }
 func message_get(value data_struct.MessageFilter) data_struct.Message {
 
