@@ -1,7 +1,7 @@
 package core
 
 import (
-//	"fmt"
+	"fmt"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"github.com/abc950309/conteam-golang/data_struct"
@@ -56,6 +56,8 @@ func Controller(user_token string, dealed_type int, dealed_method int, dealed_da
 		return nil
 	}
 	**/
+	
+	fmt.Println(dealed_data)
 
 	switch dealed_type {
 	case ConstTypeContact:
