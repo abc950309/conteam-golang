@@ -139,7 +139,7 @@ func contact_list(value data_struct.ContactFilters) data_struct.ContactList {
 
 // message methods
 func message_insert(value data_struct.Message) data_struct.Message {
-	if value.To == nil || value.From == nil || value.Content == "" {
+	if value.Content == "" {
 		return data_struct.Message{}
 	}
 	
