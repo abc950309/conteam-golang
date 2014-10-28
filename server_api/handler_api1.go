@@ -72,8 +72,6 @@ func deal_request(raw_type string, raw_method string, raw_data string) (int, int
 		return -1, -1, -1, -1
 	}
 	
-	var request_data interface{}
-	
 	// Json 解析
 	switch request_type {
 	case core.ConstTypeContact:
@@ -88,6 +86,9 @@ func deal_request(raw_type string, raw_method string, raw_data string) (int, int
 			var request_data data_struct.ContactFilter
 		case core.ConstMethodList:
 			var request_data data_struct.ContactFilters
+		default:
+			return -1, -1, -1, -1
+			var request_data interface{}
 		}
 	case core.ConstTypeMessage:
 		switch request_method {
@@ -97,9 +98,13 @@ func deal_request(raw_type string, raw_method string, raw_data string) (int, int
 			var request_data data_struct.MessageFilter
 		case core.ConstMethodList:
 			var request_data data_struct.MessageFilters
+		default:
+			return -1, -1, -1, -1
+			var request_data interface{}
 		}
 	default:
 		return -1, -1, -1, -1
+		var request_data interface{}
 	}
 	
 	if json.Unmarshal([]byte(raw_data), &request_data) == nil {
