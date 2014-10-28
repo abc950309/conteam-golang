@@ -180,11 +180,11 @@ func token_deal(user_token string, source string) (int, string) {
 	result := data_struct.Token{}
 	err = c.Find(bson.M{"token": user_token}).One(&result)
 	if err != nil {
-		return -1, ''
+		return -1, ""
 	}
 
 	if (time.Now().Unix() > result.Expire) || (source != result.Source) {
-		return -1, ''
+		return -1, ""
 	}
 
 	return -1, result.UserID
