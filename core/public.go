@@ -216,5 +216,5 @@ func token_deal(user_token string, source string) (int, string) {
 		return -1, ""
 	}
 
-	return -1, result.UserID
+	return 0, result.UserID
 }
