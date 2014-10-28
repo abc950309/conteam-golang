@@ -1,9 +1,9 @@
 package main
 
-import(
-//	"fmt"
+import (
+	//	"fmt"
 	"gopkg.in/mgo.v2"
-//	"gopkg.in/mgo.v2/bson"
+	//	"gopkg.in/mgo.v2/bson"
 )
 
 func link_mongo_init() *mgo.Session {
@@ -11,8 +11,8 @@ func link_mongo_init() *mgo.Session {
 	if err != nil {
 		panic(err)
 	}
-	
+
 	session.SetMode(mgo.Monotonic, true)
-	
+
 	return session
 }

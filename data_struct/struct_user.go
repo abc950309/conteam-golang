@@ -8,3 +8,11 @@ type User struct {
 	Admin []string `json:"admin,omitempty"`
 	TimeStamp int64 `json:"timestamp"`
 }
+
+type Token struct {
+	Token string `json:"token"`
+	UserID string `json:"user_id"`
+	Source string `json:"source"`
+	TimeStamp int64 `json:"timestamp"`
+	Expire int64 `json:"expire"`
+}

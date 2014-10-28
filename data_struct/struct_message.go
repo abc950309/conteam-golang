@@ -21,3 +21,11 @@ type MessageListItem struct {
 	MessageID string `json:"message_id"`
 	TimeStamp int64 `json:"timestamp"`
 }
+
+type MessageFilter struct {
+
+}
+
+type MessageFilters struct {
+
+}

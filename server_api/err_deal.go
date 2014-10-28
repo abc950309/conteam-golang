@@ -1,10 +1,10 @@
 package main
 
-import(
-	"fmt"
-	"net/http"
-	"github.com/abc950309/conteam-golang/data_err"
+import (
 	"encoding/json"
+	"fmt"
+	"github.com/abc950309/conteam-golang/data_err"
+	"net/http"
 )
 
 func err_output(num int) string {
@@ -20,4 +20,3 @@ func err_input_get(r *http.Request, output *string) {
 func err_api1(r *http.Request, output *string) {
 	*output += fmt.Sprint(r)
 }
-

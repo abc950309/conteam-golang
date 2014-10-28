@@ -25,3 +25,11 @@ type ContactListItem struct {
 	UserID string `json:"user_id"`
 	TimeStamp int64 `json:"timestamp"`
 }
+
+type ContactFilter struct {
+
+}
+
+type ContactFilters struct {
+
+}
