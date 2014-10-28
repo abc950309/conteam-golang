@@ -102,7 +102,6 @@ func Controller(user_token string, dealed_type int, dealed_method int, dealed_da
 			}
 		case ConstMethodGet:
 			value, ok := dealed_data.(data_struct.MessageFilter)
-			fmt.Println("ConstMethodGet: " , value)
 			if ok {
 				return message_get(value)
 			}
@@ -171,9 +170,7 @@ func message_get(value data_struct.MessageFilter) data_struct.Message {
 	if value.MessageID == "" {
 		return data_struct.Message{}
 	}
-	
-	fmt.Println("message_get: " , value)
-		
+			
 	session, err := mgo.Dial("127.0.0.1")
 	if err != nil {
 		panic(err)
@@ -184,7 +181,7 @@ func message_get(value data_struct.MessageFilter) data_struct.Message {
 	
     c := session.DB("message").C("data")
 	result := data_struct.Message{}
-	err = c.Find(bson.M{"message_id": value.MessageID}).One(&result)
+	err = c.Find(bson.M{"messageid": value.MessageID}).One(&result)
 	if err != nil {
 		fmt.Println(err)
 		return data_struct.Message{}
