@@ -71,7 +71,9 @@ func deal_request(raw_type string, raw_method string, raw_data string) (int, int
 	if core.VerifyReqLogic(request_type, request_method) == false {
 		return -1, -1, -1, -1
 	}
-
+	
+	var request_data interface{}
+	
 	// Json 解析
 	switch request_type {
 	case core.ConstTypeContact:
@@ -99,8 +101,6 @@ func deal_request(raw_type string, raw_method string, raw_data string) (int, int
 	default:
 		return -1, -1, -1, -1
 	}
-	
-	var request_data interface{}
 	
 	if json.Unmarshal([]byte(raw_data), &request_data) == nil {
 		return 0, request_type, request_method, request_data
