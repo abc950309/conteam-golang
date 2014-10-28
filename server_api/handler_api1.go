@@ -107,8 +107,10 @@ func deal_request(raw_type string, raw_method string, raw_data string) (int, int
 		var request_data interface{}
 	}
 	
-	if json.Unmarshal([]byte(raw_data), &request_data) == nil {
-		return 0, request_type, request_method, request_data
+	if isset(request_data) {
+		if json.Unmarshal([]byte(raw_data), &request_data) == nil {
+			return 0, request_type, request_method, request_data
+		}
 	}
 
 	return -1, -1, -1, -1
