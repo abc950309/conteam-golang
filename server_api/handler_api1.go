@@ -72,44 +72,61 @@ func deal_request(raw_type string, raw_method string, raw_data string) (int, int
 		return -1, -1, -1, -1
 	}
 	
-	/** Old Json 解析
+	// Old Json 解析
 	switch request_type {
 	case core.ConstTypeContact:
 		switch request_method {
 		case core.ConstMethodInsert:
 			var request_data data_struct.Contact
+			if json.Unmarshal([]byte(raw_data), &request_data) == nil {
+				return 0, request_type, request_method, request_data
+			}
 		case core.ConstMethodDelete:
 			var request_data data_struct.ContactFilter
+			if json.Unmarshal([]byte(raw_data), &request_data) == nil {
+				return 0, request_type, request_method, request_data
+			}
 		case core.ConstMethodUpdate:
 			var request_data data_struct.Contact
+			if json.Unmarshal([]byte(raw_data), &request_data) == nil {
+				return 0, request_type, request_method, request_data
+			}
 		case core.ConstMethodGet:
 			var request_data data_struct.ContactFilter
+			if json.Unmarshal([]byte(raw_data), &request_data) == nil {
+				return 0, request_type, request_method, request_data
+			}
 		case core.ConstMethodList:
 			var request_data data_struct.ContactFilters
+			if json.Unmarshal([]byte(raw_data), &request_data) == nil {
+				return 0, request_type, request_method, request_data
+			}
 		default:
 			return -1, -1, -1, -1
-			var request_data interface{}
 		}
 	case core.ConstTypeMessage:
 		switch request_method {
 		case core.ConstMethodInsert:
 			var request_data data_struct.Message
+			if json.Unmarshal([]byte(raw_data), &request_data) == nil {
+				return 0, request_type, request_method, request_data
+			}
 		case core.ConstMethodGet:
 			var request_data data_struct.MessageFilter
+			if json.Unmarshal([]byte(raw_data), &request_data) == nil {
+				return 0, request_type, request_method, request_data
+			}
 		case core.ConstMethodList:
 			var request_data data_struct.MessageFilters
+			if json.Unmarshal([]byte(raw_data), &request_data) == nil {
+				return 0, request_type, request_method, request_data
+			}
 		default:
 			return -1, -1, -1, -1
 			var request_data interface{}
 		}
 	default:
 		return -1, -1, -1, -1
-	}
-	**/
-	
-	var request_data interface{}
-	if json.Unmarshal([]byte(raw_data), &request_data) == nil {
-		return 0, request_type, request_method, request_data
 	}
 	
 	return -1, -1, -1, -1
