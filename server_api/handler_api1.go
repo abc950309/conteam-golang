@@ -17,10 +17,10 @@ func handler_api1(r *http.Request, output *string) {
 	if r.Method == "GET" {
 		err_input_get(r, output)
 	} else if r.Form["type"] != nil && r.Form["method"] != nil {
-		request_token, err := r.Form["token"][0]
-		request_type, err := r.Form["type"][0]
-		request_method, err := r.Form["method"][0]
-		request_data, err := r.Form["data"][0]
+		request_token := r.Form["token"][0]
+		request_type := r.Form["type"][0]
+		request_method := r.Form["method"][0]
+		request_data := r.Form["data"][0]
 
 		code, dealed_type, dealed_method, dealed_data := deal_request(request_type, request_method, request_data)
 		if code < 0 {
