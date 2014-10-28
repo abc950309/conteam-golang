@@ -186,6 +186,7 @@ func message_get(value data_struct.MessageFilter) data_struct.Message {
 	result := data_struct.Message{}
 	err = c.Find(bson.M{"message_id": value.MessageID}).One(&result)
 	if err != nil {
+		fmt.Println(err)
 		return data_struct.Message{}
 	}
 	
