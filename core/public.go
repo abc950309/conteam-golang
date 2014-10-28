@@ -57,7 +57,7 @@ func Controller(user_token string, dealed_type int, dealed_method int, dealed_da
 	}
 	**/
 	
-	fmt.Println("Controller: " + dealed_data)
+	fmt.Println("Controller: " , dealed_data)
 	
 	switch dealed_type {
 	case ConstTypeContact:
@@ -100,7 +100,7 @@ func Controller(user_token string, dealed_type int, dealed_method int, dealed_da
 			if ok {
 				return message_insert(value)
 			}
-			fmt.Println("ConstMethodInsert: " + value)
+			fmt.Println("ConstMethodInsert: " , value)
 		case ConstMethodGet:
 			value, ok := dealed_data.(data_struct.MessageFilter)
 			if ok {
@@ -159,7 +159,7 @@ func message_insert(value data_struct.Message) data_struct.Message {
     if err != nil {
         panic(err)
     }
-	fmt.Println("message_insert: " + value)
+	fmt.Println("message_insert: " , value)
 	
 	return value
 }
