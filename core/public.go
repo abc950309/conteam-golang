@@ -49,7 +49,7 @@ func link_mongo_init() *mgo.Session {
 
 func Controller(user_token string, dealed_type int, dealed_method int, dealed_data interface{}, source string) interface{} {
 	
-	code, user_id := token_deal(user_token)
+	code, user_id := token_deal(user_token, source)
 
 	if code < 0 {
 		return nil
